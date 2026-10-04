@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.venuetoll/toll",
+  "title": "Venue Toll Facts",
+  "description": "Measured venue tolls: fee, spread, slippage, with evidence. list_venues free; get_toll paid.",
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://venuetoll.com/mcp"
+    }
+  ]
+}
