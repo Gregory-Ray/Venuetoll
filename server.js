@@ -32,9 +32,12 @@ const PORT = (() => {
   return i > -1 ? Number(process.argv[i + 1]) : 8791;
 })();
 
-// MARKET_MAP is env-overridable so the SAME source runs locally (Windows absolute path) and in the
-// Docker image for the Glama listing (where the file is COPY'd next to the server and MARKET_MAP is set).
-const MAP = process.env.MARKET_MAP || "C:/Users/Sontje/AppData/Local/hermes/clawmes/market_map.json";
+// MARKET_MAP resolution: env override -> the live Windows path when it EXISTS -> the file next to this
+// server (the Docker/Glama case, where the repo is cloned with market_map.json beside server.js).
+const MAP = process.env.MARKET_MAP
+  || (fs.existsSync("C:/Users/Sontje/AppData/Local/hermes/clawmes/market_map.json")
+      ? "C:/Users/Sontje/AppData/Local/hermes/clawmes/market_map.json"
+      : path.join(__dirname, "market_map.json"));
 
 // slug -> the market_map entry it names. Kept explicit: a generated slug would silently change if
 // a venue were ever renamed, and a caller pinning our slug should not be broken by our own tidying.
@@ -658,7 +661,7 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, process.env.HOST || "127.0.0.1", () => {
+server.listen(PORT, process.env.HOST || "0.0.0.0", () => {
   console.log("Venue Toll Facts listening on http://127.0.0.1:" + PORT);
   console.log("  /venues          free   - venue list, incl. the ones with no priced toll");
   console.log("  /toll?venue=poly free   - the measured toll for one venue");
