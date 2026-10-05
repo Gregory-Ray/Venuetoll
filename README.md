@@ -22,13 +22,31 @@ Every figure carries an explicit basis (`measured` / `published` / `unmeasurable
 MCP tools: `list_venues` (free) and `get_toll` (paid). The paid tool returns the same 402
 challenge as the HTTP route when unpaid — no bypass.
 
-## Use it
+## Run it locally
 
-Point an MCP client at the server:
+This repository IS the server. `server.js` is the full implementation: a zero-dependency Node.js
+server (no `npm install` — Node's own `http` module serves the whole surface, both the HTTP
+routes and the MCP transport).
 
+```bash
+node server.js            # listens on http://127.0.0.1:8791
 ```
-https://venuetoll.com/mcp
+
+Or with Docker:
+
+```bash
+docker build -t venuetoll .
+docker run -p 8791:8791 venuetoll
 ```
+
+The server reads its venue data from `market_map.json` in its own directory (a sample ships in
+the repo; the live service points the same code at its own measured data via `MARKET_MAP`).
+
+## MCP transport
+
+The server speaks MCP over HTTP at `/mcp` (POST JSON-RPC 2.0 — `initialize`, `tools/list`,
+`tools/call`, `ping`). Point an MCP client at `http://127.0.0.1:8791/mcp` locally. A hosted copy
+of this same server is also available at `https://venuetoll.com/mcp`.
 
 ## Pricing
 
