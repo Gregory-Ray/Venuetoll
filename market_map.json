@@ -1,0 +1,30 @@
+{
+  "ts": "example-data",
+  "why": "SAMPLE data for the Docker/Glama listing check. The live endpoint serves real measured tolls; this file exists only so the container starts and responds to MCP introspection. No real measurement and no opportunity/verdict fields are shipped here.",
+  "markets": [
+    {
+      "market": "POLY prediction markets",
+      "cost_pct": 1.0,
+      "cost_evidence": "example: chain activity vs book, same-shares rows",
+      "cost_basis": "example",
+      "measured_at": "example",
+      "slippage_pct": 1.0,
+      "slippage_basis": "example",
+      "liquidity_note": "per-market depth, not a venue single number"
+    },
+    {
+      "market": "CROX exchange API",
+      "cost_pct": 1.0,
+      "cost_evidence": "example: published schedule, taker round trip",
+      "cost_basis": "published",
+      "measured_at": "example"
+    },
+    {
+      "market": "SOL copy",
+      "cost_pct": null,
+      "cost_evidence": "example: unmeasured venue row",
+      "cost_basis": "UNMEASURABLE TODAY",
+      "measured_at": null
+    }
+  ]
+}
